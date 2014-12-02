@@ -79,3 +79,6 @@ local.properties
 *~
 
 gc.log
+/spring4features.log
+/gradlew
+/gradlew.bat

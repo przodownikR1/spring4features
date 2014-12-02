@@ -1,0 +1,8 @@
+task generateBikeFiles << {
+    def outputDir = mkdir("$buildDir/bike")
+    def bikes = new XmlSlurper().parse(file("src/bike.xml"))
+    bikes.bike.each { bike ->
+    def bikeFile = new File(outputDir, bike.name.text() + ".info")
+    bikeFile.text = "horsePower:${bike.hp.text()}"
+    }
+    }

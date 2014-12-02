@@ -1,0 +1,10 @@
+<bikes>
+	<bike>
+		<name>Yamaha_R1</name>
+		<hp>183</hp>
+	</bike>
+	<bike>
+		<name>Suzuki_GSXR</name>
+		<hp>180</hp>
+	</bike>
+</bikes>

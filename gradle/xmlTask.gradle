@@ -1,0 +1,21 @@
+task generateXmlFile(type: ConvertBikeXml) {
+    outputDir = "$buildDir/bike" as File
+    xmlFile = file("src/bike.xml")
+    separator = ":"
+    }
+    class ConvertBikeXml extends DefaultTask {
+    @InputFile
+    File xmlFile
+    @Input
+    String separator
+    @OutputDirectory
+    File outputDir
+    @TaskAction
+    public void generate() {
+    def bikes = new XmlSlurper().parse(xmlFile)
+    bikes.bike.each { bike ->
+    def bikeFile = new File(outputDir, bike.name.text() + ".txt")
+    bikeFile.text = "hp$separator${bike.hp.text()}"
+    }
+    }
+    }
