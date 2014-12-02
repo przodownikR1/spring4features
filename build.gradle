@@ -17,6 +17,15 @@ libsDirName = './target'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+[compileJava, compileTestJava].each {
+    it.options.encoding = 'UTF-8'
+    it.options.compilerArgs += [ '-source', '1.8', '-target', '1.8' ]
+    }
+
+def env = project.hasProperty('env') ? project.getProperty('env') : 'local'
+logger.quiet "Loading configuration for environment '$env'."
 
 repositories {
     mavenCentral()
@@ -107,20 +116,22 @@ sourceSets {
     test {
         testLogging {
           events "passed", "skipped", "failed", "standardOut", "standardError"
+          showStandardStreams = false
         }
+        
         minHeapSize = "128m"
         maxHeapSize = "512m"
       
     
-        // listen to events in the test execution lifecycle
+    /*   
         beforeTest { descriptor ->
            logger.lifecycle("Running test: " + descriptor)
         }
       
-        // listen to standard out and standard error of the test JVM(s)
+       
         onOutput { descriptor, event ->
            logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
-        }
+        }*/
         }
     
     jar {
