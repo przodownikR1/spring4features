@@ -6,11 +6,16 @@ apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'project-report'
 apply plugin: 'pmd'
+apply plugin: 'jetty'
 apply plugin: 'application'
 apply plugin: 'build-dashboard'
 apply plugin: 'codenarc'
 apply from: './properties.gradle'
-
+apply plugin: 'jacoco'
+jacoco {
+  toolVersion = '0.7.1.201405082137'
+  reportsDir = file("$buildDir/reports/jacoco")
+}
 
 applicationDefaultJvmArgs = ["-Dfile.encoding=UTF=8"]
 libsDirName = './target'
@@ -34,8 +39,24 @@ repositories {
     maven { url "http://m2.neo4j.org" }
 }
 
+
+configurations {
+    all {
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+        exclude group: "commons-logging"
+        exclude module: "slf4j-log4j12"
+        exclude module: "hibernate-jpa-2.0-api"
+    }
+    intTest.extendsFrom testRuntime
+}
+
 sourceSets {
-    intTest
+    intTest{
+        java.srcDir file('src/integration-test/java')
+        resources.srcDir file('src/integration-test/resources')
+        compileClasspath = sourceSets.main.output + configurations.testRuntime
+        runtimeClasspath = output + compileClasspath
+    }
     main {
         java { srcDir 'src/main/java' }
         groovy { srcDir 'src/main/groovy' }
@@ -47,6 +68,7 @@ sourceSets {
         resources { srcDir 'src/test/resources' }
     }
 }
+
 
     dependencies {
         compile ("org.codehaus.groovy:groovy:${groovyVersion}")
@@ -96,6 +118,7 @@ sourceSets {
     
         testCompile("org.hamcrest:hamcrest-all:$hamcrestVersion")
         testCompile("org.mockito:mockito-all:$mockitoVersion")
+       
         testCompile("junit:junit:$junitVersion")
         testCompile("org.easytesting:fest-assert:${festAssertVersion}")
         testCompile("com.googlecode.catch-exception:catch-exception:1.2.0")
@@ -103,15 +126,7 @@ sourceSets {
        
     }
    
-    
-    configurations {
-        all {
-            resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-            exclude group: "commons-logging"
-            exclude module: "slf4j-log4j12"
-            exclude module: "hibernate-jpa-2.0-api"
-        }
-    }
+  
     
     test {
         testLogging {
@@ -124,16 +139,18 @@ sourceSets {
       
     
     /*   
-        beforeTest { descriptor ->
+       beforeTest { descriptor ->
            logger.lifecycle("Running test: " + descriptor)
-        }
-      
-       
+        }  
         onOutput { descriptor, event ->
            logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
-        }*/
+       }*/
+     //test.addTestListener(new TestListenerImpl())
         }
     
+   
+    
+   
     jar {
         baseName = 'spring4features'
         version =  '0.0.1'
@@ -149,7 +166,45 @@ sourceSets {
         }
     }
     
+   task intTest(type: Test) {
+        description = 'Runs the integration tests2.'
+        testClassesDir = sourceSets.intTest.output.classesDir
+        classpath = sourceSets.intTest.runtimeClasspath
+        }
     
+    
+    task integration3Test(type: Test){
+        description = 'Runs the integration tests.'
+        testClassesDir = sourceSets.intTest.output.classesDir
+        classpath = sourceSets.intTest.runtimeClasspath       
+    }
+    
+task functionalTest () {
+    doFirst{
+        println "Starting jetty as a daemon"
+        jettyRun.daemon = true
+        jettyRun.execute()
+        jettyRun.stopPort=8081
+        jettyRun.stopKey="STOP"
+    }
+    doLast {
+        println "Stopping jetty"
+        jettyStop.stopPort=8081
+        jettyStop.stopKey="STOP"
+        jettyStop.execute()
+    }
+}
+
+
+   check.dependsOn intTest
+         
     task wrapper(type: Wrapper) { gradleVersion = '10.1' }
     
-   
+    
+   /* class TestListenerImpl implements TestListener {
+        void beforeSuite(TestDescriptor suite) { println "START [$suite] [$suite.name]" }
+        void afterSuite(TestDescriptor suite, TestResult result) { println "FINISH [$suite] [$suite.name]" }
+        void beforeTest(TestDescriptor test) { println "START [$test] [$test.name]" }
+        void afterTest(TestDescriptor test, TestResult result) { println "FINISH [$test] [$test.name] [$result.exception]" }
+        }*/
+  
