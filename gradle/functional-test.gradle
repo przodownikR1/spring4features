@@ -1,0 +1,15 @@
+task functionalTest () {
+    doFirst{
+        println "Starting jetty as a daemon"
+        jettyRun.daemon = true
+        jettyRun.execute()
+        jettyRun.stopPort=8081
+        jettyRun.stopKey="STOP"
+    }
+    doLast {
+        println "Stopping jetty"
+        jettyStop.stopPort=8081
+        jettyStop.stopKey="STOP"
+        jettyStop.execute()
+    }
+}
