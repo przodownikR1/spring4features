@@ -1,4 +1,4 @@
-package spring4features;
+package pl.java.scalatech.it;
 
 import lombok.extern.slf4j.Slf4j;
 

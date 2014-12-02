@@ -23,6 +23,7 @@ public class MyConfigTest {
     private Environment env;
     @Test
     public void shouldFindBean(){
+        log.info("+++  normal test");
        if(env.getProperty("user.country").equals("PL")){
         Assertions.assertThat(value).isNotEmpty();
        }else{
