@@ -11,7 +11,7 @@ apply plugin: 'maven'
 apply plugin: 'jetty'
 apply plugin: 'application'
 apply plugin: 'build-dashboard'
-
+apply from: 'gradle/simpleXmlTask.gradle'
 apply from: 'gradle/jacoco.gradle'
 applicationName = "przodownikStarter"
 mainClassName = "pl.java.scalatech.main.Starter"
