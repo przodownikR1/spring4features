@@ -104,6 +104,25 @@ sourceSets {
         }
     }
     
+    test {
+        testLogging {
+          events "passed", "skipped", "failed", "standardOut", "standardError"
+        }
+        minHeapSize = "128m"
+        maxHeapSize = "512m"
+      
+    
+        // listen to events in the test execution lifecycle
+        beforeTest { descriptor ->
+           logger.lifecycle("Running test: " + descriptor)
+        }
+      
+        // listen to standard out and standard error of the test JVM(s)
+        onOutput { descriptor, event ->
+           logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
+        }
+        }
+    
     jar {
         baseName = 'spring4features'
         version =  '0.0.1'
