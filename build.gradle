@@ -12,6 +12,7 @@ apply plugin: 'jetty'
 apply plugin: 'application'
 apply plugin: 'build-dashboard'
 apply from: 'gradle/simpleXmlTask.gradle'
+apply from: 'gradle/xmlTask.gradle'
 apply from: 'gradle/jacoco.gradle'
 applicationName = "przodownikStarter"
 mainClassName = "pl.java.scalatech.main.Starter"
@@ -70,4 +71,4 @@ sourceSets {
         }
     }
     
-    task wrapper(type: Wrapper) { gradleVersion = '10.1' }
+    task wrapper(type: Wrapper) {  }
