@@ -2,6 +2,7 @@ package pl.java.scalatech.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
@@ -11,6 +12,7 @@ import org.springframework.core.env.Environment;
  *         Creating time : 3 kwi 2014 23:59:28
  */
 @Configuration
+@ComponentScan(basePackages = "pl.java.scalatech.component")
 public class MyConfig {
     @Autowired
     private Environment env;
