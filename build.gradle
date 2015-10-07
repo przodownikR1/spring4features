@@ -1,4 +1,4 @@
-import java.lang.annotation.Target;
+
 
 
 apply plugin: 'java'
@@ -18,6 +18,8 @@ applicationName = "przodownikStarter"
 mainClassName = "pl.java.scalatech.main.Starter"
 applicationDefaultJvmArgs = ["-Dfile.encoding=UTF=8"]
 libsDirName = './target'
+
+
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
