@@ -1,19 +1,15 @@
-
-
-
 apply plugin: 'java'
 apply from:  'gradle/dependencies.gradle'
 apply from:  'gradle/integration-test.gradle'
 apply from:  'gradle/functional-test.gradle'
 apply from:  'gradle/test.gradle'
-apply plugin: 'eclipse'
-apply plugin: 'maven'
 apply plugin: 'jetty'
 apply plugin: 'application'
 apply plugin: 'build-dashboard'
 apply from: 'gradle/simpleXmlTask.gradle'
 apply from: 'gradle/xmlTask.gradle'
 apply from: 'gradle/jacoco.gradle'
+
 applicationName = "przodownikStarter"
 mainClassName = "pl.java.scalatech.main.Starter"
 applicationDefaultJvmArgs = ["-Dfile.encoding=UTF=8"]
