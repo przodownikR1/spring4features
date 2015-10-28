@@ -57,6 +57,7 @@ dependencies {
     testCompile("org.mockito:mockito-all:$mockitoVersion")
    
     testCompile("junit:junit:$junitVersion")
+    testCompile 'com.carrotsearch:junit-benchmarks:0.7.2'
     testCompile 'org.assertj:assertj-core:3.2.0'
     testCompile 'com.jayway.awaitility:awaitility-java8:1.6.1'
     testCompile 'com.jayway.awaitility:awaitility:1.6.5'
