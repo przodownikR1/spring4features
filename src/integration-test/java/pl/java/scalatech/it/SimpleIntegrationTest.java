@@ -1,9 +1,9 @@
 package pl.java.scalatech.it;
 
-import lombok.extern.slf4j.Slf4j;
-
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class SimpleIntegrationTest {
