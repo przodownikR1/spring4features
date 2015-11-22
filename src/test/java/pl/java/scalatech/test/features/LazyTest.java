@@ -1,6 +1,7 @@
 package pl.java.scalatech.test.features;
 
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
 
 import java.sql.SQLException;
 
@@ -13,7 +14,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import static org.mockito.Mockito.mock;
 public class LazyTest {
 
     @Test

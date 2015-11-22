@@ -3,7 +3,6 @@ package pl.java.scalatech.test.config;
 import java.util.List;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +19,10 @@ import pl.java.scalatech.test.config.domain.Engine;
 public class EngineTest {
    @Autowired
    List<Engine> engines;
-  
+
     @Autowired
     private Car car;
-      
+
     @Test
     public void shouldChooseHydrogenPrimaryFeature(){
          Assertions.assertThat(car).isNotNull();
@@ -34,7 +33,7 @@ public class EngineTest {
     public void shouldInjectIntoList(){
         Assertions.assertThat(engines).hasSize(3);
     }
-    
- 
-    
+
+
+
 }
